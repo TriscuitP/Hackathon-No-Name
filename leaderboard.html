@@ -1,9 +1,67 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
+  <head>
+    <title>Map For Empowerment</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .btn-group button {
+        color: black; /* Black text */
+        padding: 10px 24px; /* Some padding */
+        cursor: pointer; /* Pointer/hand icon */
+        display: block; /* Make the buttons appear below each other */
+      }
+
+      .btn-group button:not(:last-child) {
+          border-bottom: none; /* Prevent double borders */
+      }
+
+      #container {
+        width: 600px;
+        height: auto;
+      }
+
+      .row {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #AFAFAF;
+      }
+
+      .name {
+        position: relative;
+        display: inline-block;
+        width: 75%;
+        line-height: 45px;
+      }
+
+      .score {
+        position: relative;
+        display: inline-block;
+        width: 25%;
+      }
+
+      /* Gold */
+      .row:nth-child(1) {background: gold;}
+      /* Silver */
+      .row:nth-child(2) {background: #c0c0c0;}
+      /* Bronze */
+      .row:nth-child(3) {background: #cd7f32;}
+
+      body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -60,11 +118,13 @@ body {
     text-align: left;
   }
 }
-</style>
-</head>
-<body>
 
-<div class="topnav" id="myTopnav">
+
+
+    </style>
+  </head>
+  <body>
+    <div class="topnav" id="myTopnav">
   <a href=home.html>Home</a>
   <a href=account.html>Login/Create Account</a>
   <a href=leaderboard.html class="active">Leaderboard</a>
@@ -73,5 +133,38 @@ body {
 </div>
 
 <div style="padding-left:16px">
-  <h2>Leaderboards</h2>
-  <p>Ranking</p>
+  <h2>Rankings</h2>
+  <p></p>
+    <body>
+    <h3>Top Recyclers</h3>
+    <div id="container">
+      <div class="row">
+        <div class="name">Player1</div><div class="score">430</div>
+      </div>
+
+      <div class="row">
+        <div class="name">Player2</div><div class="score">580</div>
+      </div>
+
+      <div class="row">
+        <div class="name">Player3</div><div class="score">310</div>
+      </div>
+
+      <div class="row">
+        <div class="name">Player4</div><div class="score">640</div>
+      </div>
+
+      <div class="row">
+        <div class="name">Player5</div><div class="score">495</div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" style="float: right;">Recycle</button>
+    </div>
+    <script type="text/javascript">
+      
+    </script>
+  </body>
+
+
