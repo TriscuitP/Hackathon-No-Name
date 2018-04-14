@@ -8,14 +8,14 @@ var labelIndex = 0;
 
 function initMap() 
 {
-  var pos = {lat: 37.7749, lng: -122.4194};
+  var pos = {lat: 37.757, lng: -122.472};
 
   map = new google.maps.Map(document.getElementById('map'), 
   {
     center: pos,
-    zoom: 13
+    zoom: 12
   });
-  // infoWindow = new google.maps.InfoWindow;
+ 
   service = new google.maps.places.PlacesService(map);
 
   // Try HTML5 geolocation.
@@ -45,8 +45,8 @@ function initMap()
   var request = 
   {
     location: map.getCenter(),
-    radius: '350',
-    query: 'Recycle'
+    radius: '9000',
+    query: 'recycle'
   };
   service = new google.maps.places.PlacesService(map);
   service.textSearch(request, callback);
