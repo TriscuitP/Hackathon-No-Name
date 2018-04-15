@@ -4,8 +4,9 @@
     1.使用 HTTP 服务器与客户端交互，需要 require('http')。
         声明http协议
         */
-        var http = require('http');
-
+    var http = require('http');
+    var LocalStorage = require('node-localstorage').LocalStorage,
+    localStorage = new LocalStorage('');
 
     // 声明文件操作系统对象
     var fs = require('fs');
@@ -85,11 +86,11 @@
             fs.readFile('./login.html','utf-8',function(err,data){
 
 
-            var express = require('express');
-            var app = express();
-            app.use(bodyParser.urlencoded({ extended: false }));
+            // var express = require('express');
+            // var app = express();
+            // app.use(bodyParser.urlencoded({ extended: false }));
             
-            response.send('hello world');
+            // response.send('hello world');
            
 
 
@@ -100,10 +101,28 @@
                 }
                 response.end(data);
             });
-        }else if(url === '/index'){
+        }else if(url === '/register'){
             response.writeHead(200,{'Content-Type':'text/html'});
             // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
-            fs.readFile('./googleMap.html','utf-8',function(err,data){
+            fs.readFile('./createAccount.html','utf-8',function(err,data){
+                if(err){
+                    throw err ;
+                }
+                response.end(data);
+            });
+        }else if(url === '/leaderboard'){
+            response.writeHead(200,{'Content-Type':'text/html'});
+            // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
+            fs.readFile('./leaderboard.html','utf-8',function(err,data){
+                if(err){
+                    throw err ;
+                }
+                response.end(data);
+            });
+        }else if(url === '/about'){
+            response.writeHead(200,{'Content-Type':'text/html'});
+            // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
+            fs.readFile('./about.html','utf-8',function(err,data){
                 if(err){
                     throw err ;
                 }
@@ -112,7 +131,7 @@
         }else{
             response.writeHead(200,{'Content-Type':'text/html'});
             // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
-            fs.readFile('./googleMap.html','utf-8',function(err,data){
+            fs.readFile('./home.html','utf-8',function(err,data){
                 if(err){
                     throw err ;
                 }
