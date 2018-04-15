@@ -70,8 +70,15 @@ app.post('/login', function(req, res) {
         if(pw == pass) {
             res.sendFile(__dirname + "/home.html");
 
+            // res.send({ exists: "Login successful!"});
+            // res.render(__dirname + "/home.html",  { exists: "Login successful!" }, function(err, html) {
+            //      res.send(html);
+            // });
+
             console.log("Login successful");
+            //need to get text to actually display when login/registering
             req.body.exists = "Login successful!";
+            console.log("Exists: " + req.body.exists);
         } else {
             res.sendFile(__dirname + "/login.html");
 
@@ -102,26 +109,29 @@ app.post('/register', function(req, res){
 
     var text = localStorage.getItem(name);
     var obj = JSON.parse(text);
-
-    if(obj != null) {
-        console.log("Username " + obj.username + " already exists! Please choose another username.");
-        // document.getElementById("exists").innerHTML = "Username " + obj.username + 
-        // " already exists! Please choose another username.";
+    if(name.length === 0 || name.trim()) {
+        console.log("Username is invalid! Please choose another username.");
     } else {
-        //passwords should not include \", and should not be blank or consist of just whitespace
-        if(pw === pwCheck && !pw.includes("\"") && pw.length !== 0 && !pw.trim()) {
-            var userObj = { "username":name, "password":pw };
-            console.log("userObj = " + userObj);
-            var userJSON = JSON.stringify(userObj);
-            localStorage.setItem(name, userJSON);
-
-            res.sendFile(__dirname + "/home.html");
-            console.log("Successfully created account!");
-            // document.getElementById("exists").innerHTML = "Successfully created account!";
+        if(obj != null) {
+            console.log("Username " + obj.username + " already exists! Please choose another username.");
+            // document.getElementById("exists").innerHTML = "Username " + obj.username + 
+            // " already exists! Please choose another username.";
         } else {
-            res.sendFile(__dirname + "/createAccount.html");
-            console.log("Password is invalid, or passwords don't match. Please try again");
-            // document.getElementById("exists").innerHTML = "Passwords do not match or is invalid. Please try again";
+            //passwords should not include \", and should not be blank or consist of just whitespace
+            if(pw === pwCheck && !pw.includes("\"") && pw.length !== 0 && !pw.trim()) {
+                var userObj = { "username":name, "password":pw };
+                console.log("userObj = " + userObj);
+                var userJSON = JSON.stringify(userObj);
+                localStorage.setItem(name, userJSON);
+
+                res.sendFile(__dirname + "/home.html");
+                console.log("Successfully created account!");
+                // document.getElementById("exists").innerHTML = "Successfully created account!";
+            } else {
+                res.sendFile(__dirname + "/createAccount.html");
+                console.log("Password is invalid, or passwords don't match. Please try again");
+                // document.getElementById("exists").innerHTML = "Passwords do not match or is invalid. Please try again";
+            }
         }
     }
 });
