@@ -109,11 +109,12 @@ app.post('/register', function(req, res){
 
     var text = localStorage.getItem(name);
     var obj = JSON.parse(text);
-    if(name.length === 0 || name.trim()) {
+    if(name.length === 0 || name.trim() == null) {
         console.log("Username is invalid! Please choose another username.");
     } else {
         if(obj != null) {
             console.log("Username " + obj.username + " already exists! Please choose another username.");
+            res.sendFile(__dirname + "/createAccount.html");
             // document.getElementById("exists").innerHTML = "Username " + obj.username +
             // " already exists! Please choose another username.";
         } else {
