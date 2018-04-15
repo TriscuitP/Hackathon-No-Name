@@ -105,11 +105,12 @@ app.post('/register', function(req, res){
 
     if(obj != null) {
         console.log("Username " + obj.username + " already exists! Please choose another username.");
-        // document.getElementById("exists").innerHTML = "Username " + obj.username + 
+        res.sendFile(__dirname + "/createAccount.html");
+        // document.getElementById("exists").innerHTML = "Username " + obj.username +
         // " already exists! Please choose another username.";
     } else {
         //passwords should not include \", and should not be blank or consist of just whitespace
-        if(pw === pwCheck && !pw.includes("\"") && pw.length !== 0 && !pw.trim()) {
+        if(pw === pwCheck && !pw.includes("\"") && pw.length !== 0 && pw.trim() != null) {
             var userObj = { "username":name, "password":pw };
             console.log("userObj = " + userObj);
             var userJSON = JSON.stringify(userObj);
