@@ -204,8 +204,6 @@ html, body {
 
   <div class="topnav" id="myTopnav">
   <a href=home.html>Home</a>
-
-  <a href=login.html class="active">Login/Create Account</a>
   <a href=login.html class="active">Create Account</a>
   <a href=leaderboard.html>Leaderboard</a>
   <a href=about.html>About</a>
@@ -215,14 +213,8 @@ html, body {
 
 <div class="login-page">
   <div class="form">
-    <form class="register-form" method="POST" action="googleMap.html">
-      <input type="text" id="name" placeholder="username"/>
-      <input type="password" id="newPassword" placeholder="password"/>
-      <input type="password" id="passwordCheck" placeholder="password checker"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="login.html">Sign In</a></p>
-    </form>
-    <form class="login-form" method="POST" action="googleMap.html">
+  
+    <form class="login-form" method="POST" action="home.html">
       <input type="text" id="username" placeholder="username"/>
       <input type="password" id="password" placeholder="password"/>
       <button onclick="login()" type="button">Login</button>
