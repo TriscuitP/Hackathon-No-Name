@@ -76,7 +76,9 @@ function createMarker(place) {
   infowindow.setContent(place.name);
 
   marker.addListener('click', function() {
+    if(activeInfoWindow) { activeInfoWindow.close();}
     infowindow.open(map, marker);
+    activeInfoWindow = infowindow;
   });
 }
 
