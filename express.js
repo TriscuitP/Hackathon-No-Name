@@ -7,13 +7,14 @@ app.use(bodyParser.urlencoded({ extended: true}));
 var LocalStorage = require('node-localstorage').LocalStorage;
 localStorage = new LocalStorage('./scratch');
 
+var name;
 /******************************
  * Home GET and POST requests *
  ******************************/
 app.get('/', function(req, res) {
     console.log("Got a Get request for home.");
+    //do this for every time the user needs to move to a page
     res.sendFile(__dirname + "/home.html");
-    // response.send('Hello GET');
 });
 
 app.post('/', function(req, res) {
@@ -24,7 +25,6 @@ app.post('/', function(req, res) {
 app.get('/home', function(req, res) {
     console.log("Got a Get request for home.");
     res.sendFile(__dirname + "/home.html");
-    // response.send('Hello GET');
 });
 
 app.post('/home', function(req, res) {
@@ -40,37 +40,50 @@ app.get('/login', function(req, res) {
     res.sendFile(__dirname + "/login.html");
 });
 
+/*
+ * Creates a POST request for loging in. Gets the user's name and pw
+ */
 app.post('/login', function(req, res) {
-    // console.log("Got a POST request for login.");
     console.log("Got a POST request from " + req.body.username + ".");
-    console.log("Got a POST request from " + req.body.password + ".");
 
-    var name = req.body.username;
+    /* gets username from the body input box by name="username" */
+    name = req.body.username;
     var pw = req.body.password;
+
+    console.log("pw "+pw);
 
     var text = localStorage.getItem(name);
     //if there was no json to parse, then username was not found
     if(!JSON.parse(text)){
         res.sendFile(__dirname + "/login.html");
+
         console.log("User not found. Please try again. If you do not have an account, please create one");
+
         req.body.exists
         = "User not found. Please try again. If you do not have an account, please create one";
     } else {
         var obj = JSON.parse(text);
-        //gets pw with quotations, this will do a crude removal of \" as passwords will not contain \"
-        var pass = obj.password.split("\"")[1];
+        var pass = obj.password;
+
+        console.log("pass " + pass);
 
         if(pw == pass) {
             res.sendFile(__dirname + "/home.html");
+
             console.log("Login successful");
             req.body.exists = "Login successful!";
         } else {
             res.sendFile(__dirname + "/login.html");
+
             console.log("Password is invalid. Please try again.");
             req.body.exists = "Password is invalid. Please try again.";
         }
     }
 });
+
+/**********************************
+ * Register GET and POST requests *
+ **********************************/
 
 app.get('/register', function(req, res) {
     console.log("Got a GET request for register.");
@@ -80,9 +93,12 @@ app.get('/register', function(req, res) {
 app.post('/register', function(req, res){
     console.log("Got a POST request for register.");
 
-    var name = req.body.username;
+    //gets username from the input box by name="name", pw by name="newPassword"
+    name = req.body.name;
     var pw = req.body.newPassword;
     var pwCheck = req.body.passwordCheck;
+
+    console.log("name = " + name);
 
     var text = localStorage.getItem(name);
     var obj = JSON.parse(text);
@@ -92,9 +108,10 @@ app.post('/register', function(req, res){
         // document.getElementById("exists").innerHTML = "Username " + obj.username + 
         // " already exists! Please choose another username.";
     } else {
-        //passwords should not include \"
-        if(pw === pwCheck && !pw.includes("\"")) {
+        //passwords should not include \", and should not be blank or consist of just whitespace
+        if(pw === pwCheck && !pw.includes("\"") && pw.length !== 0 && !pw.trim()) {
             var userObj = { "username":name, "password":pw };
+            console.log("userObj = " + userObj);
             var userJSON = JSON.stringify(userObj);
             localStorage.setItem(name, userJSON);
 
@@ -102,12 +119,16 @@ app.post('/register', function(req, res){
             console.log("Successfully created account!");
             // document.getElementById("exists").innerHTML = "Successfully created account!";
         } else {
-            res.sendFile(__dirname + "/login.html");
-            console.log("Passwords do not match or is invalid. Please try again");
+            res.sendFile(__dirname + "/createAccount.html");
+            console.log("Password is invalid, or passwords don't match. Please try again");
             // document.getElementById("exists").innerHTML = "Passwords do not match or is invalid. Please try again";
         }
     }
 });
+
+/*******************************
+ * Etc GET and POST requests *
+ *******************************/
 
 app.get('/leaderboard', function(req, res) {
     console.log("Got a GET request for leaderboard.");
@@ -129,86 +150,3 @@ var server = app.listen(1337, function(){
 
     console.log("listening at http://%s:%s", host, port)
 });
-
-
-    // var http = require('http');
-    // var LocalStorage = require('node-localstorage').LocalStorage,
-    // localStorage = new LocalStorage('');
-
-    // var fs = require('fs');
-
-    // var server = http.createServer();
-
-    //     server.listen(1337, function(){
-    //        console.log('服务器正在端口号：1337上运行......');
-    //    })
-
-
-    //     server.on('request',function(request,response){
-
-    //         var url = request.url;
-    //         if(url ==='/'){
-
-    //         response.writeHead(200,{'Content-Type':'text/html'})
-
-    //         fs.readFile('./home.html','utf-8',function(err,data){
-    //             if(err){
-    //                 throw err ;
-    //             }
-    //             response.end(data);
-    //         });
-
-    //     }else if(url === '/login'){
-            
-    //         response.writeHead(200,{'Content-Type':'text/html'});
-
-    //         fs.readFile('./login.html','utf-8',function(err,data){
- 
-
-
-
-
-    //             if(err){
-    //                 throw err ;
-    //             }
-    //             response.end(data);
-    //         });
-    //     }else if(url === '/register'){
-    //         response.writeHead(200,{'Content-Type':'text/html'});
-
-    //         fs.readFile('./createAccount.html','utf-8',function(err,data){
-    //             if(err){
-    //                 throw err ;
-    //             }
-    //             response.end(data);
-    //         });
-    //     }else if(url === '/leaderboard'){
-    //         response.writeHead(200,{'Content-Type':'text/html'});
-
-    //         fs.readFile('./leaderboard.html','utf-8',function(err,data){
-    //             if(err){
-    //                 throw err ;
-    //             }
-    //             response.end(data);
-    //         });
-    //     }else if(url === '/about'){
-    //         response.writeHead(200,{'Content-Type':'text/html'});
-
-    //         fs.readFile('./about.html','utf-8',function(err,data){
-    //             if(err){
-    //                 throw err ;
-    //             }
-    //             response.end(data);
-    //         });
-    //     }else{
-    //         response.writeHead(200,{'Content-Type':'text/html'});
-
-    //         fs.readFile('./home.html','utf-8',function(err,data){
-    //             if(err){
-    //                 throw err ;
-    //             }
-    //             response.end(data);
-    //         });
-    //     }
-        
-    // });
