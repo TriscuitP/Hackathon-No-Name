@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="Data.js"></script>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 h2 {
@@ -167,7 +168,7 @@ body {
 
   <div class="topnav" id="myTopnav">
   <a href=home.html>Home</a>
-  <a href=login.html class="active">f/Create Account</a>
+  <a href=login.html class="active">Login/Create Account</a>
   <a href=leaderboard.html>Leaderboard</a>
   <a href=about.html>About</a>
   </div>
@@ -177,17 +178,19 @@ body {
 <div class="login-page">
   <div class="form">
     <form class="register-form" method="POST" action="googleMap.html">
-      <input type="text" name="newUsername" placeholder="usname"/>
-      <input type="password" name="password" placeholder="password"/>
-      <input type="password" name="passwordCheck" placeholder="password checker"/>
+      <input type="text" id="name" placeholder="usname"/>
+      <input type="password" id="newPassword" placeholder="password"/>
+      <input type="password" id="passwordCheck" placeholder="password checker"/>
       <button>create</button>
       <p class="message">Already registered? <a href="login.html">Sign In</a></p>
     </form>
     <form class="login-form" method="POST" action="googleMap.html">
-      <input type="text" name="username" placeholder="username"/>
-      <input type="password" name="password" placeholder="password"/>
-      <button>login</button>
+      <input type="text" id="username" placeholder="username"/>
+      <input type="password" id="password" placeholder="password"/>
+      <button onclick="login()" type="button">Login</button>
       <p class="message">Not registered? <a href="createAccount.html">Create an account</a></p>
+      <p id="exists">
+      </p>
     </form>
   </div>
 </div>

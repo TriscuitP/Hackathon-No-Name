@@ -6,9 +6,12 @@
 
 // var user = {items: items, amount: amount, prices: prices};
 
+var express = require('express');
+var app = exress();
+
 function addUser() {
 	var name = document.getElementById("name").value;
-	var pw = document.getElementById("password").value;
+	var pw = document.getElementById("newPassword").value;
 	var pwCheck = document.getElementById("passwordCheck").value;
 
 	// document.write(name);
@@ -35,5 +38,17 @@ function addUser() {
 	}
 }
 
+function login() {
+	var name = document.getElementById("username").value;
+	var pw = document.getElementById("password").value;
 
+	var text = localStorage.getItem(name);
+	var obj = JSON.parse(text);
+
+	// document.getElementById("exists").innerHTML = obj.password;
+
+	// if(obj.password == pw) {
+	// 	document.getElementById("exists").innerHTML = "Login successful!";
+	// }
+}
 
