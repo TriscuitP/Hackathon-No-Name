@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="Data.js"></script>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 h2 {
@@ -216,11 +217,15 @@ body {
 <div class="register-page">
   <div class="form">
     <form class="register-form" method="POST" action="login.html">
-      <input type="text" name="newUsername" placeholder="username"/>
-      <input type="password" name="password" placeholder="password"/>
-      <input type="password" name="passwordCheck" placeholder="check password"/>
-      <button>create</button>
+      <input type="text" id="name" placeholder="username"/>
+      <input type="password" id="password" placeholder="password"/>
+      <input type="password" id="passwordCheck" placeholder="check password"/>
+      <button onclick="addUser()" type="button">Create</button>
       <p class="message">Already registered? <a href="login.html">Sign In</a></p>
+      <p id="exists">
+        <font color="red">
+        </font>
+      </p>
     </form>
   </div>
 </div>
