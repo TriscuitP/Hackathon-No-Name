@@ -4,7 +4,7 @@
     1.使用 HTTP 服务器与客户端交互，需要 require('http')。
         声明http协议
         */
-        var http = require('http');
+    var http = require('http');
 
 
     // 声明文件操作系统对象
@@ -22,28 +22,49 @@
         3.向客户端发送响应。
         */
 
-   
 
-    var server = http.createServer();
-    /**
-    3.声明端口号，开启服务。
-        server.listen([port][, host][, backlog][, callback])
+var express = require('express');
+var app = express();
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false })); 
+app.get('/login', function(req, res){
+    console.log(req.query.first_name);
 
-        port <number> ：端口号
-        host <string> ：主机ip
-        backlog <number> server.listen() 函数的通用参数
-        callback <Function> server.listen() 函数的通用参数
-        Returns: <net.Server>
-        启动一个TCP服务监听输入的port和host。
+    fs.readFile('./login.html','utf-8',function(err,data){
+        if(err){
+            throw err ;
+        }
+        res.end(data);
+    });
+return;
+});
 
-        如果port省略或是0，系统会随意分配一个在'listening'事件触发后能被server.address().port检索的无用端口。
+app.post('/login',function(req, res){
+    console.log(req.body.first_name);  
 
-        如果host省略，如果IPv6可用，服务器将会接收基于unspecified IPv6 address (::)的连接，否则接收基于unspecified IPv4 address (0.0.0.0)的连接
-    
-        */
-        server.listen(1337, function(){
-           console.log('服务器正在端口号：1337上运行......');
-       })
+    fs.readFile('./login.html','utf-8',function(err,data){
+        if(err){
+            throw err ;
+        }
+        res.end(data);
+    });
+return;
+});
+
+
+
+    var server = app.listen(1337, function(){
+       console.log('http://127.0.0.1:1337');
+    });
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -64,14 +85,25 @@
         response： response是一个响应对象，可以用来给请求发送响应。
     
         */
-        server.on('request',function(request,response){
 
-            var url = request.url;
-            if(url ==='/'){
+    console.log("@@");
+    server.on('request',function(request,response){
+
+        var url = request.url;
+        if(url ==="/favicon.ico"){
+            return;
+        }
+
+        console.log("@0@ = "+url);
+
+
+
+        if(url ==='/'){
+            console.log("@1@ = /");           
             //response.writeHead(响应状态码，响应头对象): 发送一个响应头给请求。
-            response.writeHead(200,{'Content-Type':'text/html'})
+            response.writeHead(200,{'Content-Type':'text/html'});
             // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
-            fs.readFile('./home.html','utf-8',function(err,data){
+            fs.readFile('./googleMap.html','utf-8',function(err,data){
                 if(err){
                     throw err ;
                 }
@@ -79,28 +111,21 @@
             });
 
         }else if(url === '/login'){
-            
+            console.log("@2@ = login");
+
             response.writeHead(200,{'Content-Type':'text/html'});
             // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
             fs.readFile('./login.html','utf-8',function(err,data){
-
-
-            var express = require('express');
-            var app = express();
-            app.use(bodyParser.urlencoded({ extended: false }));
-            
-            response.send('hello world');
-           
-
-
-
-
                 if(err){
                     throw err ;
                 }
                 response.end(data);
+
             });
+
+            console.log("@20@ = login");
         }else if(url === '/index'){
+            console.log("@3@ = index");
             response.writeHead(200,{'Content-Type':'text/html'});
             // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
             fs.readFile('./googleMap.html','utf-8',function(err,data){
@@ -110,11 +135,11 @@
                 response.end(data);
             });
         }else{
+            console.log("@404@ = "+ url);
             response.writeHead(200,{'Content-Type':'text/html'});
-            // 如果url=‘/’ ,读取指定文件下的html文件，渲染到页面。
             fs.readFile('./googleMap.html','utf-8',function(err,data){
                 if(err){
-                    throw err ;
+                    throw err;
                 }
                 response.end(data);
             });
